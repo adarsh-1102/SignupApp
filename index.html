@@ -24,49 +24,60 @@
     }
     h2 { text-align: center; color: #5a4fcf; margin-bottom: 20px; font-weight: 600; }
     label { display: block; margin-bottom: 6px; font-size: 14px; color: #444; }
-    input {
-      width: 100%; padding: 10px; margin-bottom: 16px;
-      border: 1px solid #ccc; border-radius: 6px; font-size: 14px;
-    }
+    input { width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
     input:focus { border-color: #5a4fcf; outline: none; }
-    button {
-      width: 100%; padding: 12px; background: #5a4fcf;
-      color: #fff; border: none; border-radius: 6px;
-      font-size: 16px; font-weight: 600; cursor: pointer;
-    }
+    button { width: 100%; padding: 12px; background: #5a4fcf; color: #fff; border: none; border-radius: 6px; font-size: 16px; font-weight: 600; cursor: pointer; }
     button:hover { background: #4636b8; }
     @keyframes fadeIn { from {opacity:0;transform:translateY(15px);} to {opacity:1;transform:translateY(0);} }
   </style>
 </head>
 <body>
-  <div class="signup-box">
-    <h2>Create Account</h2>
-    <form action="https://docs.google.com/forms/d/e/1FAIpQLSevg7YKmJAia5fmI4ED3vTkH6lAUvmPmxlNodoJs0gQK1smeQ/formResponse"
-          method="POST">
 
-      <label for="name">Full Name</label>
-      <input type="text" id="name" name="entry.1573966539" required />
+<div class="signup-box" id="form-container">
+  <h2>Create Account</h2>
+  <form id="signup-form">
+    <label>Full Name</label>
+    <input type="text" name="entry.1573966539" required>
 
-      <label for="phone">Phone Number</label>
-      <input type="text" id="phone" name="entry.555635589" required />
+    <label>Phone Number</label>
+    <input type="text" name="entry.555635589" required>
 
-      <label for="email">Email</label>
-      <input type="email" id="email" name="entry.591353669" required />
+    <label>Email</label>
+    <input type="email" name="entry.591353669" required>
 
-      <label for="address">Address</label>
-      <input type="text" id="address" name="entry.894076504" required />
+    <label>Address</label>
+    <input type="text" name="entry.894076504" required>
 
-      <label for="pincode">Pincode</label>
-      <input type="text" id="pincode" name="entry.183602187" required />
+    <label>Pincode</label>
+    <input type="text" name="entry.183602187" required>
 
-      <label for="password">Password</label>
-      <input type="password" id="password" name="entry.1252695323" required />
+    <label>Password</label>
+    <input type="password" name="entry.1252695323" required>
 
-      <button type="submit">Sign Up</button>
-    </form>
-    <p style="text-align:center;font-size:12px;color:#555;margin-top:10px;">
-      After submission, you’ll see the Google Form’s “Response received” page.
-    </p>
-  </div>
+    <button type="submit">Sign Up</button>
+  </form>
+</div>
+
+<script>
+const form = document.getElementById('signup-form');
+form.addEventListener('submit', function(e) {
+  e.preventDefault(); // prevent page reload
+
+  const formData = new FormData(form);
+  const params = new URLSearchParams(formData);
+
+  fetch('https://docs.google.com/forms/d/e/1FAIpQLSevg7YKmJAia5fmI4ED3vTkH6lAUvmPmxlNodoJs0gQK1smeQ/formResponse', {
+    method: 'POST',
+    body: params
+  }).finally(() => {
+    // Replace form with custom thank-you message
+    document.getElementById('form-container').innerHTML = `
+      <h2>🎉 Thank You!</h2>
+      <p>Your account has been created successfully.</p>
+    `;
+  });
+});
+</script>
+
 </body>
 </html>
