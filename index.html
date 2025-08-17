@@ -41,9 +41,11 @@
 <body>
   <div class="signup-box">
     <h2>Create Account</h2>
-    <form action="https://docs.google.com/forms/d/e/1FAIpQLSevg7YKmJAia5fmI4ED3vTkH6lAUvmPmxlNodoJs0gQK1smeQ/formResponse"
+    <form id="signupForm"
+          action="https://docs.google.com/forms/d/e/1FAIpQLSevg7YKmJAia5fmI4ED3vTkH6lAUvmPmxlNodoJs0gQK1smeQ/formResponse"
           method="POST"
-          target="_blank">
+          target="hidden_iframe"
+          onsubmit="submitted=true;">
 
       <label for="name">Full Name</label>
       <input type="text" id="name" name="entry.1573966539" required />
@@ -65,9 +67,22 @@
 
       <button type="submit">Sign Up</button>
     </form>
-    <p style="text-align:center;font-size:12px;color:#555;margin-top:10px;">
-      After submission, you’ll see the Google Form’s thank-you page.
+    <p id="confirmation" style="text-align:center;font-size:14px;color:#5a4fcf;margin-top:15px; display:none;">
+      Thank you! Your information has been submitted.
     </p>
   </div>
+
+  <!-- hidden iframe -->
+  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="
+    if(submitted) {
+      document.getElementById('signupForm').reset();
+      document.getElementById('confirmation').style.display='block';
+      submitted=false;
+    }
+  "></iframe>
+
+  <script>
+    let submitted = false;
+  </script>
 </body>
 </html>
