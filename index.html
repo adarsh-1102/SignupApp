@@ -41,7 +41,11 @@
 <body>
   <div class="signup-box">
     <h2>Create Account</h2>
-    <form id="signupForm">
+    <form action="https://docs.google.com/forms/d/e/1FAIpQLSevg7YKmJAia5fmI4ED3vTkH6lAUvmPmxlNodoJs0gQK1smeQ/formResponse"
+          method="POST"
+          target="hidden_iframe"
+          onsubmit="submitted=true;">
+
       <label for="name">Full Name</label>
       <input type="text" id="name" name="entry.1573966539" required />
 
@@ -64,19 +68,9 @@
     </form>
   </div>
 
-  <script>
-    document.getElementById("signupForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const form = e.target;
-
-      fetch("https://docs.google.com/forms/d/e/1FAIpQLSevg7YKmJAia5fmI4ED3vTkH6lAUvmPmxlNodoJs0gQK1smeQ/formResponse", {
-        method: "POST",
-        body: new FormData(form),
-        mode: "no-cors"
-      }).then(() => {
-        window.location.href = "thankyou.html";
-      });
-    });
-  </script>
+  <!-- Hidden iframe to handle redirect -->
+  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" 
+          onload="if(submitted) { window.location='thankyou.html'; }"></iframe>
+  <script>let submitted=false;</script>
 </body>
 </html>
